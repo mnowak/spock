@@ -11,4 +11,9 @@ public class Person {
     public String getName() {
         return name;
     }
+
+    public boolean receiveMessage(String message) {
+        System.out.println(this.name + " " + message);
+        return true;
+    }
 }

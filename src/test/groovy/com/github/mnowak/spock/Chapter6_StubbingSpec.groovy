@@ -104,4 +104,33 @@ class Chapter6_StubbingSpec extends Specification {
         thrown UnsupportedOperationException
     }
 
+    def "should allow chaining method responses and actions"() {
+        given:
+        def stubbed = Stub(DataProvider)
+        stubbed.size() >>> [1, 2] >> { throw new UnsupportedOperationException() } >> 3
+
+        when:
+        def a = stubbed.size()
+        def b = stubbed.size()
+
+        then:
+        a == 1
+        b == 2
+
+        when:
+        def c = stubbed.size()
+
+        then:
+        thrown(UnsupportedOperationException)
+
+        when:
+        def d = stubbed.size()
+
+        then:
+        d == 3
+
+
+
+    }
+
 }

@@ -61,18 +61,22 @@ class Chapter7_MockingSpec extends Specification {
         1 * mocked.send(*_)
     }
 
-    def "should allow verifying interactions in an extreme way (you shouldn't usually need this)"() {
+    def "should allow strict mocking"() {
         given:
-        def mocked = Mock(EmailService)
+        def mock = Mock(EmailService)
+        def secondMock = Mock(EmailService)
 
         when:
-        1 + 2
+        mock.send(new Person("Johny"), "Hi Johny")
+        // uncomment the following line to raise error
+        // secondMock.send(new Person("Jack"), "Hello Jack")
 
         then:
-        0 * _  // zero interactions on any mock
-        0 * mocked._  // zero interactions on 'mocked' object
-        _ * _._(*_)  // going extreme
+        1 * mock.send(*_)
+        0 * _  // zero interactions on any other mock
+
     }
+
 
     def "should allow imposing the order of invocations"() {
         given:
