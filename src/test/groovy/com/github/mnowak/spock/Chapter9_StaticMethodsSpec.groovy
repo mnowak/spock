@@ -16,13 +16,13 @@ class Chapter9_StaticMethodsSpec extends Specification {
 
     def "should allow static methods stubbing"() {
         given:
-        PowerMockito.mockStatic(StaticCalculator.class)
+            PowerMockito.mockStatic(StaticCalculator.class)
 
         when:
-        Mockito.when(StaticCalculator.add(2, 3)).thenReturn(0)
+            Mockito.when(StaticCalculator.add(2, 3)).thenReturn(0)
 
         then:
-        StaticCalculator.add(2,3,) == 0
+            StaticCalculator.add(2, 3,) == 0
 
     }
 

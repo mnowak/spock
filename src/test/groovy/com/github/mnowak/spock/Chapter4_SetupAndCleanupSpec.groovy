@@ -1,4 +1,5 @@
 package com.github.mnowak.spock
+
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -33,18 +34,18 @@ class Chapter4_SetupAndCleanupSpec extends Specification {
 
     def "some test"() {
         given:
-        println "    some test called (refreshed: ${refreshed.hashCode()}, shared: ${shared.hashCode()})"
+            println "    some test called (refreshed: ${refreshed.hashCode()}, shared: ${shared.hashCode()})"
 
         expect:
-        true
+            true
     }
 
     def "some other test"() {
         given:
-        println "    some other test called (refreshed: ${refreshed.hashCode()}, shared: ${shared.hashCode()})"
+            println "    some other test called (refreshed: ${refreshed.hashCode()}, shared: ${shared.hashCode()})"
 
         expect:
-        true
+            true
     }
 
 }
