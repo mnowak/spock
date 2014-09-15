@@ -95,6 +95,38 @@ class Chapter7_MockingSpec extends Specification {
             1 * mocked.send(person, "Bye!")
     }
 
+    def "should allow capturing arguments"() {
+        given:
+            def mocked = Mock(EmailService)
+            def person = new Person("Bob")
+            def capturedName
+
+        when:
+            mocked.send(person, "Hello!")
+
+        then:
+            1 * mocked.send(person, "Hello!") >> { Person p, message ->
+                capturedName = p.getName();
+            }
+
+            capturedName == "Bob"
+
+    }
+
+    def "should allow inline argument verification"() {
+        given:
+            def mocked = Mock(EmailService)
+            def person = new Person("Bob")
+
+        when:
+            mocked.send(person, "Hello!")
+
+        then:
+            1 * mocked.send(_, _) >> { Person p, String message -> message.length() > 0 }
+
+    }
+
+
     def "should allow mixing mocking and stubbing (you shouldn't usually need this)"() {
         given:
             def mocked = Mock(DataProvider)
