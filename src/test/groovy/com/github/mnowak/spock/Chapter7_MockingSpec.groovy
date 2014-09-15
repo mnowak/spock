@@ -19,6 +19,7 @@ class Chapter7_MockingSpec extends Specification {
         then:
             1 * mocked.send(person, "Hello!")
             0 * mocked.send(person, "not executed")
+
     }
 
     def "only interactions within the 'when' block should be considered"() {
@@ -94,6 +95,17 @@ class Chapter7_MockingSpec extends Specification {
         then:
             1 * mocked.send(person, "Bye!")
     }
+
+    def "should allow veryfing nested method calls"() {
+        given:
+            def service = new EmailServiceImpl()
+            def person = Mock(Person)
+        when:
+            service.send(person, "<3")
+        then:
+            1 * person.receiveMessage("<3")
+    }
+
 
     def "should allow capturing arguments"() {
         given:

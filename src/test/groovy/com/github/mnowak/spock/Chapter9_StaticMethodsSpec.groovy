@@ -5,6 +5,7 @@ import org.mockito.Mockito
 import org.powermock.api.mockito.PowerMockito
 import org.powermock.core.classloader.annotations.PrepareForTest
 import org.powermock.modules.junit4.rule.PowerMockRule
+import spock.lang.Ignore
 import spock.lang.Specification
 
 @PrepareForTest([StaticCalculator.class])
@@ -17,16 +18,27 @@ class Chapter9_StaticMethodsSpec extends Specification {
     def "should allow static methods stubbing"() {
         given:
             PowerMockito.mockStatic(StaticCalculator.class)
-
-        when:
             Mockito.when(StaticCalculator.add(2, 3)).thenReturn(0)
 
+        when:
+            def sum = StaticCalculator.add(2, 3)
         then:
-            StaticCalculator.add(2, 3,) == 0
+            sum == 0
 
     }
 
-    // TODO: verifying static methods
+    @Ignore
+    def "should allow static methods verifying"() {
+        given:
+            PowerMockito.mockStatic(StaticCalculator.class)
 
+        when:
+            def add = StaticCalculator.add(3, 7)
+        then:
+//            add == 10
+            PowerMockito.verifyStatic();
+            StaticCalculator.add(3, 7)
+
+    }
 
 }
