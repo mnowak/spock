@@ -27,18 +27,43 @@ class Chapter9_StaticMethodsSpec extends Specification {
 
     }
 
-    @Ignore
+
     def "should allow static methods verifying"() {
         given:
             PowerMockito.mockStatic(StaticCalculator.class)
+            Mockito.when(StaticCalculator.add(2, 3)).thenReturn(6)
 
         when:
-            def add = StaticCalculator.add(3, 7)
-        then:
-//            add == 10
-            PowerMockito.verifyStatic();
-            StaticCalculator.add(3, 7)
+            def add = StaticCalculator.add(2, 3)
 
+            // not in then because of boolean evaluation expression
+            PowerMockito.verifyStatic();
+            StaticCalculator.add(2, 3)
+
+        then:
+            add == 6
+
+    }
+
+    def "should allow static methods verifying in then block"() {
+        given:
+            PowerMockito.mockStatic(StaticCalculator.class)
+            Mockito.when(StaticCalculator.add(2, 3)).thenReturn(6)
+
+        when:
+            def add = StaticCalculator.add(2, 3)
+
+        then:
+            add == 6
+            verifyStaticCall()
+
+    }
+
+    def verifyStaticCall() {
+        PowerMockito.verifyStatic();
+        StaticCalculator.add(2, 3)
+
+        return true
     }
 
 }
